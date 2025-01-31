@@ -135,7 +135,7 @@ function Journeys() {
 
     const fetchJourneys = async () => {
         try {
-            const response = await fetch('http://localhost:5001/api/journeys');
+            const response = await fetch('/api/journeys');
             const data = await response.json();
             setJourneys(data);
             setLoading(false);
@@ -177,7 +177,7 @@ function Journeys() {
                 console.log('FormData entry:', pair[0], pair[1]);
             }
     
-            const response = await fetch('http://localhost:5001/api/journeys', {
+            const response = await fetch('/api/journeys', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -222,7 +222,7 @@ function Journeys() {
                 });
             }
 
-            const response = await fetch(`http://localhost:5001/api/journeys/${editingJourney._id}`, {
+            const response = await fetch(`/api/journeys/${editingJourney._id}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -242,7 +242,7 @@ function Journeys() {
     const handleDeleteJourney = async (journeyId) => {
         if (window.confirm('Are you sure you want to delete this journey?')) {
             try {
-                const response = await fetch(`http://localhost:5001/api/journeys/${journeyId}`, {
+                const response = await fetch(`/api/journeys/${journeyId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`
