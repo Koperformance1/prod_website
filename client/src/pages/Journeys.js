@@ -29,7 +29,7 @@ const GalleryModal = ({ journey, onClose }) => {
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [nextImage, previousImage, onClose]);
 
     return (
         <motion.div

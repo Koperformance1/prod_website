@@ -31,12 +31,6 @@ const JourneyForm = ({ journey, onSubmit, onCancel }) => {
         setNewImagePreviews(prevPreviews => prevPreviews.filter((_, i) => i !== index));
     };
 
-
-    const handleRemoveImage = (index) => {
-        setImages(prevImages => prevImages.filter((_, i) => i !== index));
-        setImageFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
-    };
-
     const handleAddTechnology = (e) => {
         e.preventDefault();
         if (newTech.trim() && !technologies.includes(newTech.trim())) {
