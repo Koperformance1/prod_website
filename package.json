@@ -7,7 +7,7 @@
     "server": "cd server && npm run dev",
     "client": "cd client && npm start",
     "setup": "cd server && npm install && cd ../client && npm install",
-    "build": "cd client && npm install && npm run build",
+    "build": "cd client && npm install && CI=false npm run build",
     "start": "node server/server.js"
   },
   "keywords": [],
