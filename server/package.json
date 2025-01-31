@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "cd ../client && npm install && npm run build && mkdir -p /app/server/client && cp -r build /app/server/client/"
+    "build": "cd /app/client && npm install && npm run build && mkdir -p /app/server/client && cp -r build /app/server/client/"
   },
   "dependencies": {
     "axios": "^1.7.9",
