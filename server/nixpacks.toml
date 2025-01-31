@@ -1,0 +1,13 @@
+[phases.setup]
+nixPkgs = ['nodejs', 'npm']
+
+[phases.build]
+cmds = [
+  'cd client && npm install && npm run build',
+  'cd ../server && npm install',
+  'mkdir -p server/client',
+  'cp -r client/build server/client/'
+]
+
+[start]
+cmd = 'cd server && npm start'
