@@ -3,16 +3,16 @@ aptPkgs = ['nodejs']
 
 [phases.install]
 cmds = [
-  'cd client && npm install',
-  'cd ../server && npm install'
+  'cd /app/client && npm install',
+  'cd /app/server && npm install'
 ]
 
 [phases.build]
 cmds = [
-  'cd client && npm run build',
-  'mkdir -p ../server/client',
-  'cp -r build ../server/client/'
+  'cd /app/client && npm run build',
+  'mkdir -p /app/server/client',
+  'cp -r /app/client/build /app/server/client/'
 ]
 
 [start]
-cmd = 'cd server && npm start'
+cmd = 'cd /app/server && npm start'
