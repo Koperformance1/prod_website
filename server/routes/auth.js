@@ -34,33 +34,33 @@ router.post('/login', async (req, res) => {
 // server/routes/auth.js
 // Add this route after your login route:
 
-router.post('/register', async (req, res) => {
-    try {
-        const { username, password, adminSecret } = req.body;
+// router.post('/register', async (req, res) => {
+//     try {
+//         const { username, password, adminSecret } = req.body;
         
-        // Check admin secret (store this in your .env file)
-        if (adminSecret !== process.env.ADMIN_SECRET) {
-            return res.status(403).json({ message: 'Invalid admin secret' });
-        }
+//         // Check admin secret (store this in your .env file)
+//         if (adminSecret !== process.env.ADMIN_SECRET) {
+//             return res.status(403).json({ message: 'Invalid admin secret' });
+//         }
 
-        // Check if user exists
-        const existingUser = await User.findOne({ username });
-        if (existingUser) {
-            return res.status(400).json({ message: 'Username already exists' });
-        }
+//         // Check if user exists
+//         const existingUser = await User.findOne({ username });
+//         if (existingUser) {
+//             return res.status(400).json({ message: 'Username already exists' });
+//         }
 
-        // Create new admin user
-        const user = new User({
-            username,
-            password,
-            isAdmin: true
-        });
+//         // Create new admin user
+//         const user = new User({
+//             username,
+//             password,
+//             isAdmin: true
+//         });
 
-        await user.save();
-        res.status(201).json({ message: 'Admin user created successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
+//         await user.save();
+//         res.status(201).json({ message: 'Admin user created successfully' });
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// });
 
 module.exports = router;
