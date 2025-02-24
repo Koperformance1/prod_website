@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import Ticker from './Ticker'; 
+import Ticker from './Ticker';
 
 const Home = () => {
+  const [backgroundImage, setBackgroundImage] = useState('url(images/IMG_4356.jpg)');
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1000) {
+        setBackgroundImage('url(images/mobile.jpg)');
+      } else {
+        setBackgroundImage('url(images/IMG_4356.jpg)');
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="flex flex-col h-[77vh]">
       <motion.div
         className="relative h-[calc(100vh-50px)] bg-cover bg-center bg-no-repeat m-0 p-0 overflow-hidden"
         style={{
-          backgroundImage: 'url(images/IMG_4356.jpg)'
+          backgroundImage: backgroundImage
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -18,10 +33,10 @@ const Home = () => {
       >
         <div className="absolute inset-0 bg-black/50 flex">
           <motion.div
-            className="absolute lg:left-[10%] lg:top-[20%] lg:max-w-[400px] 
+            className="relative top-[58%] mx-4 max-h-[265px] max-w-[500px] p-8 bg-white
+                       sm:absolute sm:top-[62%] sm:w-1/2
                        md:left-[5%] md:top-1/2 md:max-w-[350px]
-                       sm:relative sm:mx-4 sm:my-auto sm:w-full sm:max-w-none
-                       bg-white p-8"
+                       lg:left-[10%] lg:top-[50%] lg:max-w-[400px]"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.7 }}

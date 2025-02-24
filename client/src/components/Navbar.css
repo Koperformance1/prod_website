@@ -29,7 +29,7 @@
     display: none; /* Hidden by default on mobile */
   }
   
-  @media (min-width: 768px) {
+  @media (min-width: 1000px) {
     .links {
       display: flex;
       gap: 2rem;
@@ -39,7 +39,7 @@
     }
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 1000px){
     .logo {
         font-size: 1.2rem;
         font-weight: bold;
@@ -100,7 +100,7 @@
     padding: 0.5rem;
   }
   
-  @media (min-width: 768px) {
+  @media (min-width: 1000px) {
     .mobile-menu-button {
       display: none; /* Hide on desktop */
     }
