@@ -11,6 +11,17 @@ function Contact() {
     });
     const [status, setStatus] = useState('');
     const [captchaToken, setCaptchaToken] = useState(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 500);
+
+    // Handle window resize for responsive layout
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 500);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Load reCAPTCHA script
     useEffect(() => {
@@ -178,9 +189,8 @@ function Contact() {
                                 style={{...styles.input, height: '281px'}}
                             ></textarea>
                         </div>
-                        
-                        {/* reCAPTCHA */}
-                        <div style={styles.recaptchaContainer}>
+
+                        <div style={styles.recaptchaWrapper}>
                             <div 
                                 className="g-recaptcha" 
                                 data-sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
@@ -188,11 +198,11 @@ function Contact() {
                                 data-callback="onRecaptchaSuccess"
                                 data-expired-callback="onRecaptchaExpired"
                             ></div>
-                                                    
-                            <button type="submit" style={styles.submitButton}>
-                                {status === 'sending' ? 'Sending...' : 'Send Message'}
-                            </button>
                         </div>
+                                                
+                        <button type="submit" style={styles.submitButton}>
+                            {status === 'sending' ? 'Sending...' : 'Send Message'}
+                        </button>
                         
                         {status === 'success' && (
                             <p style={styles.successMessage}>Message sent successfully!</p>
@@ -273,19 +283,31 @@ const styles = {
     },
     recaptchaContainer: {
         display: 'flex',
-        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '1rem',
         marginTop: '1rem',
         marginBottom: '1rem'
     },
+    recaptchaWrapper: {
+        display: 'flex',
+        justifyContent: 'center',
+        // Ensure reCAPTCHA doesn't overflow on small screens
+        maxWidth: '100%',
+        overflow: 'hidden',
+        flexDirection: 'column'
+    },
     submitButton: {
-        padding: '0.75rem',
+        padding: '0.75rem 1.5rem',
         backgroundColor: '#0066cc',
         color: '#fff',
         border: 'none',
         borderRadius: '4px',
         fontSize: '1rem',
         cursor: 'pointer',
-        transition: 'background-color 0.2s'
+        transition: 'background-color 0.2s',
+        whiteSpace: 'nowrap',
+        // Ensure button doesn't shrink too much
+        flexShrink: 0
     },
     successMessage: {
         color: '#28a745',
