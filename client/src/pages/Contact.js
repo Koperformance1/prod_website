@@ -1,5 +1,5 @@
 // client/src/pages/Contact.js
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 function Contact() {
@@ -10,9 +10,43 @@ function Contact() {
         message: ''
     });
     const [status, setStatus] = useState('');
+    const [captchaToken, setCaptchaToken] = useState(null);
+
+    // Load reCAPTCHA script
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+
+        // Set up global callback function
+        window.onRecaptchaSuccess = (token) => {
+            setCaptchaToken(token);
+            setStatus(''); // Clear any CAPTCHA error when user completes it
+        };
+
+        window.onRecaptchaExpired = () => {
+            setCaptchaToken(null);
+        };
+
+        return () => {
+            // Cleanup
+            const scripts = document.querySelectorAll('script[src*="recaptcha"]');
+            scripts.forEach(script => script.remove());
+            delete window.onRecaptchaSuccess;
+            delete window.onRecaptchaExpired;
+        };
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        if (!captchaToken) {
+            setStatus('captcha-required');
+            return;
+        }
+
         setStatus('sending');
 
         try {
@@ -21,15 +55,33 @@ function Contact() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({
+                    ...formData,
+                    captchaToken
+                })
             });
 
-            if (!response.ok) throw new Error('Failed to send message');
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || 'Failed to send message');
+            }
             
             setStatus('success');
             setFormData({ name: '', email: '', subject: '', message: '' });
+            setCaptchaToken(null);
+            // Reset reCAPTCHA
+            if (window.grecaptcha) {
+                window.grecaptcha.reset();
+            }
         } catch (error) {
+            console.error('Contact form error:', error);
             setStatus('error');
+            // Reset reCAPTCHA on error
+            setCaptchaToken(null);
+            if (window.grecaptcha) {
+                window.grecaptcha.reset();
+            }
         }
     };
 
@@ -126,14 +178,30 @@ function Contact() {
                                 style={{...styles.input, height: '281px'}}
                             ></textarea>
                         </div>
-                        <button type="submit" style={styles.submitButton}>
-                            {status === 'sending' ? 'Sending...' : 'Send Message'}
-                        </button>
+                        
+                        {/* reCAPTCHA */}
+                        <div style={styles.recaptchaContainer}>
+                            <div 
+                                className="g-recaptcha" 
+                                data-sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                                data-theme="dark"
+                                data-callback="onRecaptchaSuccess"
+                                data-expired-callback="onRecaptchaExpired"
+                            ></div>
+                                                    
+                            <button type="submit" style={styles.submitButton}>
+                                {status === 'sending' ? 'Sending...' : 'Send Message'}
+                            </button>
+                        </div>
+                        
                         {status === 'success' && (
                             <p style={styles.successMessage}>Message sent successfully!</p>
                         )}
                         {status === 'error' && (
                             <p style={styles.errorMessage}>Failed to send message. Please try again.</p>
+                        )}
+                        {status === 'captcha-required' && (
+                            <p style={styles.errorMessage}>Please complete the CAPTCHA verification.</p>
                         )}
                     </form>
                 </div>
@@ -202,6 +270,12 @@ const styles = {
         fontSize: '1rem',
         color: 'white',
         backgroundColor: '#000000',
+    },
+    recaptchaContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '1rem',
+        marginBottom: '1rem'
     },
     submitButton: {
         padding: '0.75rem',

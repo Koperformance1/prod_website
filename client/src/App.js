@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import Facility from './pages/about/Facility';
 import Staff from './pages/about/Staff';
 import Schedule from './pages/about/Schedule';
+import PARQForm from './pages/about/Parq';
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                             <Route path="/about/schedule" element={<Schedule />} />
                             <Route path="/about/facility" element={<Facility />} />
                             <Route path="/about/staff" element={<Staff />} />
+                            <Route path="/about/parq" element={<PARQForm />} />
                             <Route path="/journeys" element={<Journeys />} />
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/login" element={<Login />} />

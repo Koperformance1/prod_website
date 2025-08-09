@@ -67,6 +67,9 @@ const Navbar = () => {
                 <Link to="/about/staff" className="dropdownLink">
                   Staff
                 </Link>
+                <Link to="/about/parq" className="dropdownLink">
+                  PAR-Q
+                </Link>
               </div>
             )}
           </div>
@@ -136,6 +139,13 @@ const Navbar = () => {
               onClick={toggleMobileMenu}
             >
               STAFF
+            </Link>
+            <Link 
+              to="/about/parq" 
+              className="dropdownLink pl-6"
+              onClick={toggleMobileMenu}
+            >
+              PAR-Q
             </Link>
           </>
         )}

@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const authRoutes = require('./routes/auth');
+const parqRoutes = require('./routes/parq');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-// Log environment check
 console.log('Starting server...');
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('MongoDB URI exists:', !!process.env.MONGODB_URI);
@@ -26,8 +26,9 @@ app.use(express.json());
 app.use('/api/journeys', journeyRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api', parqRoutes);
 
-// MongoDB connection with more detailed error handling
+
 console.log('Attempting MongoDB connection...');
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Connected to MongoDB'))
@@ -37,11 +38,9 @@ mongoose.connect(process.env.MONGODB_URI)
             code: err.code,
             name: err.name
         });
-        // Keep the server running but log the error
         console.error('Server will continue running but database functionality will be limited');
     });
 
-// Serve static files from the React build directory
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, './client/build')));
 
@@ -58,7 +57,6 @@ if (!process.env.JWT_SECRET) {
 
 const PORT = process.env.PORT || 5001;
 
-// Add error handling for the Express server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 }).on('error', (err) => {
