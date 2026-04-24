@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const PARQForm = () => {
+  console.log('PARQForm component rendered');
   const [formData, setState] = useState({
     name: '',
     email: '',
@@ -184,8 +185,16 @@ const PARQForm = () => {
     );
   }
 
+const testClick = () => {
+  console.log('TEST BUTTON CLICKED');
+};
+
+
   return (
     <div className="max-w-3xl mx-auto my-8 p-6 bg-black rounded-lg shadow-md border-2 border-white">
+      <button onClick={testClick} type="button" className="bg-red-500 text-white p-2 mb-4">
+        TEST CLICK
+      </button>
       <h1 className="text-2xl font-bold text-center text-white mb-6">Physical Activity Readiness Questionnaire (PAR-Q)</h1>
       
       <div className="mb-8 bg-black p-4 rounded-md border-2 border-white">
@@ -200,7 +209,11 @@ const PARQForm = () => {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit}>
+        
+      <form onSubmit={(e) => {
+          console.log('FORM ONSUBMIT TRIGGERED');
+          handleSubmit(e);
+        }}>
         <div className="grid md:grid-cols-3 gap-4 mb-8">
           <div className="form-group">
             <label htmlFor="name" className="block text-sm font-medium text-white mb-1">Full Name:</label>
@@ -322,6 +335,7 @@ const PARQForm = () => {
 
         <button 
           type="submit" 
+          onClick={() => console.log('SUBMIT BUTTON CLICKED')}
           className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Submit Form
