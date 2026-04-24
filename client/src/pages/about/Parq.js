@@ -99,43 +99,76 @@ const PARQForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    console.log('Form submit triggered');
-    console.log('Captcha token exists:', !!captchaToken);
-    console.log('Captcha token:', captchaToken);
+    console.log('=== FORM SUBMISSION STARTED ===');
+    console.log('1. Form data:', formData);
+    console.log('2. Captcha token exists:', !!captchaToken);
+    console.log('3. Captcha token value:', captchaToken);
+    console.log('4. Widget ID:', widgetIdRef.current);
+    
+    // Check if reCAPTCHA response exists
+    if (window.grecaptcha && widgetIdRef.current !== null) {
+      try {
+        const response = window.grecaptcha.getResponse(widgetIdRef.current);
+        console.log('5. grecaptcha.getResponse():', response);
+        
+        // If we have a response but captchaToken is null, update it
+        if (response && !captchaToken) {
+          console.log('6. Found token via getResponse, updating state');
+          setCaptchaToken(response);
+          // Wait a moment for state to update, then try again
+          setTimeout(() => {
+            console.log('7. Retrying submission with token');
+            handleSubmit(e);
+          }, 100);
+          return;
+        }
+      } catch (err) {
+        console.error('Error getting reCAPTCHA response:', err);
+      }
+    }
     
     // Validate CAPTCHA
     if (!captchaToken) {
+      console.log('8. NO CAPTCHA TOKEN - showing error');
       setError('Please complete the CAPTCHA verification before submitting.');
       return;
     }
+    
+    console.log('9. Captcha validated, checking questions...');
     
     // Validate that all questions have been answered
     const questionFields = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'];
     const unanswered = questionFields.filter(q => formData[q] === '');
     
     if (unanswered.length > 0) {
+      console.log('10. Unanswered questions:', unanswered);
       setError('Please answer all health questions before submitting.');
       return;
     }
     
+    console.log('11. All validations passed, submitting to server...');
+    
     try {
-      console.log('Sending form data to server...');
-      const response = await axios.post('/api/parq-submission', {
+      const payload = {
         ...formData,
         captchaToken
-      });
+      };
+      console.log('12. Payload:', payload);
       
-      console.log('Server response:', response.data);
+      const response = await axios.post('/api/parq-submission', payload);
+      
+      console.log('13. Server response:', response.data);
       setSubmitted(true);
       setError('');
     } catch (err) {
-      console.error('Submission error:', err);
-      console.error('Error response:', err.response?.data);
+      console.error('14. Submission error:', err);
+      console.error('15. Error response:', err.response?.data);
       
       setError(err.response?.data?.message || 'There was an error submitting your form. Please try again.');
       
       // Reset CAPTCHA on error
       if (window.grecaptcha && widgetIdRef.current !== null) {
+        console.log('16. Resetting reCAPTCHA');
         window.grecaptcha.reset(widgetIdRef.current);
         setCaptchaToken(null);
       }
