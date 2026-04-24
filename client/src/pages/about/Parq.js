@@ -259,7 +259,7 @@ const testClick = () => {
           <div className="space-y-4">
             {/* All your existing question blocks - keep them as is */}
             <div className="p-3 bg-black rounded-md border-2 border-white">
-              <p className="text-sm text-white mb-2">Has your doctor ever said that you have a heart condition and that you should only do physical activity recommended by a doctor?</p>
+              <p className="text-sm text-white mb-2">Hawwwwws your doctor ever said that you have a heart condition and that you should only do physical activity recommended by a doctor?</p>
               <div className="flex space-x-6 mt-2">
                 <label className="inline-flex items-center">
                   <input 
