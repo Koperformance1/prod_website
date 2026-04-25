@@ -184,17 +184,224 @@ const PARQForm = () => {
             />
           </div>
         </div>
-
-        {/* All your question fields - keep them exactly as they are */}
         <div className="mb-8">
           <h2 className="text-lg font-semibold text-white mb-4">Please read the questions carefully and answer each one honestly:</h2>
           
-          {/* ... keep all your existing question divs ... */}
-          
+          <div className="space-y-4">
+            <div className="p-3 bg-black rounded-md border-2 border-white">
+              <p className="text-sm text-white mb-2">Has your doctor ever said that you have a heart condition and that you should only do physical activity recommended by a doctor?</p>
+              <div className="flex space-x-6 mt-2">
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q1" 
+                    value="yes" 
+                    checked={formData.q1 === 'yes'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">Yes</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q1" 
+                    value="no" 
+                    checked={formData.q1 === 'no'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div className="p-3 bg-black rounded-md border-2 border-white">
+              <p className="text-sm text-white mb-2">Do you feel pain in your chest when you do physical activity?</p>
+              <div className="flex space-x-6 mt-2">
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q2" 
+                    value="yes" 
+                    checked={formData.q2 === 'yes'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">Yes</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q2" 
+                    value="no" 
+                    checked={formData.q2 === 'no'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div className="p-3 bg-black rounded-md border-2 border-white">
+              <p className="text-sm text-white mb-2">In the past month, have you had chest pain when you were not doing physical activity?</p>
+              <div className="flex space-x-6 mt-2">
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q3" 
+                    value="yes" 
+                    checked={formData.q3 === 'yes'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">Yes</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q3" 
+                    value="no" 
+                    checked={formData.q3 === 'no'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div className="p-3 bg-black rounded-md border-2 border-white">
+              <p className="text-sm text-white mb-2">Do you lose your balance because of dizziness or do you ever lose consciousness?</p>
+              <div className="flex space-x-6 mt-2">
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q4" 
+                    value="yes" 
+                    checked={formData.q4 === 'yes'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">Yes</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q4" 
+                    value="no" 
+                    checked={formData.q4 === 'no'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div className="p-3 bg-black rounded-md border-2 border-white">
+              <p className="text-sm text-white mb-2">Do you have a bone or joint problem that could be made worse by a change in your physical activity?</p>
+              <div className="flex space-x-6 mt-2">
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q5" 
+                    value="yes" 
+                    checked={formData.q5 === 'yes'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">Yes</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q5" 
+                    value="no" 
+                    checked={formData.q5 === 'no'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div className="p-3 bg-black rounded-md border-2 border-white">
+              <p className="text-sm text-white mb-2">Is your doctor currently prescribing drugs (for example, water pills) for your blood pressure or heart condition?</p>
+              <div className="flex space-x-6 mt-2">
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q6" 
+                    value="yes" 
+                    checked={formData.q6 === 'yes'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">Yes</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q6" 
+                    value="no" 
+                    checked={formData.q6 === 'no'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">No</span>
+                </label>
+              </div>
+            </div>
+            
+            <div className="p-3 bg-black rounded-md border-2 border-white">
+              <p className="text-sm text-white mb-2">Do you know of any other reason why you should not do physical activity?</p>
+              <div className="flex space-x-6 mt-2">
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q7" 
+                    value="yes" 
+                    checked={formData.q7 === 'yes'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">Yes</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input 
+                    type="radio" 
+                    name="q7" 
+                    value="no" 
+                    checked={formData.q7 === 'no'} 
+                    onChange={handleChange}
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                  />
+                  <span className="ml-2 text-sm text-white">No</span>
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="mb-8 border-t border-b border-gray-200 py-6">
-          {/* ... keep your existing instructions ... */}
+          <div className="mb-4">
+            <p className="font-medium text-white mb-2">If you answered YES to one or more questions:</p>
+            <ul className="list-disc pl-5 text-sm text-white space-y-1">
+              <li>Talk with your doctor by phone or in person BEFORE you start becoming much more physically active or BEFORE you have a fitness appraisal.</li>
+              <li>Tell your doctor about the PAR-Q and which questions you answered YES.</li>
+            </ul>
+          </div>
+          
+          <div>
+            <p className="font-medium text-white mb-2">If you answered NO to all questions:</p>
+            <ul className="list-disc pl-5 text-sm text-white space-y-1">
+              <li>You can be reasonably sure that you can start becoming much more physically active – begin slowly and build up gradually.</li>
+              <li>You may take part in a fitness appraisal – this is an excellent way to determine your basic fitness so that you can plan the best way for you to live actively.</li>
+            </ul>
+          </div>
         </div>
 
         <div className="mb-8">
@@ -210,7 +417,6 @@ const PARQForm = () => {
           />
         </div>
 
-        {/* reCAPTCHA container - changed from data attributes to div with id */}
         <div className="mb-6 flex justify-center">
           <div id="recaptcha-container"></div>
         </div>
@@ -232,4 +438,4 @@ const PARQForm = () => {
   );
 };
 
-export default PARQForm;
+export default PARQForm
