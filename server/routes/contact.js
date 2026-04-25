@@ -73,7 +73,7 @@ router.post('/', async (req, res) => {
     // Send email with Resend
     console.log('Sending email via Resend...');
     const data = await resend.emails.send({
-      from: 'contact@koperformance.com',
+      from: 'onboarding@resend.dev',
       to: process.env.EMAIL_USER,
       subject: `Contact Page Inquiry - ${subject}`,
       reply_to: email,
@@ -89,8 +89,7 @@ Submitted: ${new Date().toLocaleString()}
       `
     });
 
-    console.log('Email sent successfully:', data);
-
+    console.log('Resend API Response:', JSON.stringify(data, null, 2));
     // IMPORTANT: Send success response back to client
     res.status(200).json({ 
       success: true,
