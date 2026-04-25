@@ -5,21 +5,25 @@ const JourneyForm = ({ journey, onSubmit, onCancel }) => {
     const [title, setTitle] = useState(journey?.title || '');
     const [description, setDescription] = useState(journey?.description || '');
     const [technologies, setTechnologies] = useState(journey?.technologies || []);
-    const [images, setImages] = useState(journey?.images || []);
-    const [imageFiles, setImageFiles] = useState([]);
-    const [newTech, setNewTech] = useState('');
-
+    const [githubUrl, setGithubUrl] = useState(journey?.githubUrl || '');
+    const [liveUrl, setLiveUrl] = useState(journey?.liveUrl || '');
+    
+    // Track existing and new images separately
     const [existingImages, setExistingImages] = useState(journey?.images || []);
     const [newImageFiles, setNewImageFiles] = useState([]);
     const [newImagePreviews, setNewImagePreviews] = useState([]);
+    const [newTech, setNewTech] = useState('');
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        setNewImageFiles(prevFiles => [...prevFiles, ...files]);
         
-        // Create preview URLs for the new images
-        const newPreviewUrls = files.map(file => URL.createObjectURL(file));
-        setNewImagePreviews(prevPreviews => [...prevPreviews, ...newPreviewUrls]);
+        if (files.length > 0) {
+            setNewImageFiles(prevFiles => [...prevFiles, ...files]);
+            
+            // Create preview URLs for the new images
+            const newPreviewUrls = files.map(file => URL.createObjectURL(file));
+            setNewImagePreviews(prevPreviews => [...prevPreviews, ...newPreviewUrls]);
+        }
     };
 
     const handleRemoveExistingImage = (index) => {
@@ -45,13 +49,28 @@ const JourneyForm = ({ journey, onSubmit, onCancel }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit({
+        
+        // For new journeys, just send the image files
+        // For editing, send both existing and new
+        const submissionData = journey ? {
             title,
             description,
             technologies,
-            existingImages, // Pass existing images separately
+            githubUrl,
+            liveUrl,
+            existingImages,
+            newImages: newImageFiles
+        } : {
+            title,
+            description,
+            technologies,
+            githubUrl,
+            liveUrl,
             images: newImageFiles
-        });
+        };
+        
+        console.log('Submitting form data:', submissionData);
+        onSubmit(submissionData);
     };
 
     return (

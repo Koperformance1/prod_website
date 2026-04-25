@@ -149,7 +149,6 @@ function Journeys() {
         try {
             const formData = new FormData();
             
-            // Debug log
             console.log('Journey Data received:', journeyData);
             
             // Append regular fields
@@ -171,20 +170,15 @@ function Journeys() {
                     console.log(`Appended image ${index}:`, image.name);
                 });
             }
-    
-            // Debug log formData
-            for (let pair of formData.entries()) {
-                console.log('FormData entry:', pair[0], pair[1]);
-            }
-    
-            const response = await fetch('/api/journeys', {
+
+            const response = await fetch('http://localhost:5001/api/journeys', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
                 body: formData
             });
-    
+
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error('Error response:', errorData);
