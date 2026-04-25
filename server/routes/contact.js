@@ -1,10 +1,12 @@
 // server/routes/contact.js
 const express = require('express');
 const router = express.Router();
-const nodemailer = require('nodemailer');
 const https = require('https');
 const querystring = require('querystring');
 require('dotenv').config();
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 
 // reCAPTCHA verification function
 async function verifyRecaptcha(token) {
