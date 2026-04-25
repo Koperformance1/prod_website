@@ -66,35 +66,21 @@ router.post('/', async (req, res) => {
           });
         }
 
-        // Create a transporter using your email service
-        const transporter = nodemailer.createTransport({
-            service: 'gmail', 
-            secure: false,
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        });
-
-        // Email options
-        const mailOptions = {
-            from: process.env.EMAIL_USER,
-            replyTo: email,
-            to: process.env.EMAIL_USER,
-            subject: `Contact Page Inquiry - ${subject}`,
-            text: `
-                Name: ${name}
-                Email: ${email}
-                Subject: ${subject}
-                Message: ${message}
-                
-                Submitted: ${new Date().toLocaleString()}
-            `
-        };
-
         // Send email
-        await transporter.sendMail(mailOptions);
-        res.status(200).json({ success: true, message: 'Email sent successfully' });
+        await resend.emails.send({
+          from: 'contact@koperformance.com',
+          to: process.env.EMAIL_USER,    // where you want to receive messages
+          subject: `Contact Page Inquiry - ${subject}`,
+          reply_to: email,
+          text: `
+        Name: ${name}
+        Email: ${email}
+        Subject: ${subject}
+        Message: ${message}
+
+        Submitted: ${new Date().toLocaleString()}
+          `
+        });
     } catch (error) {
       console.error('Error sending email:');
       console.error('Message:', error.message);
