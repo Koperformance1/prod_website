@@ -21,51 +21,30 @@ const PARQForm = () => {
 
   // Load reCAPTCHA script
   useEffect(() => {
-    // Remove any existing reCAPTCHA scripts first
-    const existingScripts = document.querySelectorAll('script[src*="recaptcha"]');
-    existingScripts.forEach(script => script.remove());
-
     const script = document.createElement('script');
-    script.src = `https://www.google.com/recaptcha/api.js?render=explicit`;
+    script.src = 'https://www.google.com/recaptcha/api.js';
     script.async = true;
     script.defer = true;
-    
-    script.onload = () => {
-      console.log('reCAPTCHA script loaded');
-      // Render the reCAPTCHA widget after script loads
-      if (window.grecaptcha && window.grecaptcha.render) {
-        try {
-          window.grecaptcha.render('recaptcha-container', {
-            sitekey: process.env.REACT_APP_RECAPTCHA_SITE_KEY,
-            theme: 'dark',
-            callback: (token) => {
-              console.log('reCAPTCHA completed');
-              setCaptchaToken(token);
-              setError('');
-            },
-            'expired-callback': () => {
-              console.log('reCAPTCHA expired');
-              setCaptchaToken(null);
-            }
-          });
-        } catch (err) {
-          console.error('Error rendering reCAPTCHA:', err);
-        }
-      }
+    document.body.appendChild(script);
+
+    // Set up global callback function
+    window.onRecaptchaSuccess = (token) => {
+      console.log('reCAPTCHA completed');
+      setCaptchaToken(token);
+      setError('');
     };
 
-    document.head.appendChild(script);
+    window.onRecaptchaExpired = () => {
+      console.log('reCAPTCHA expired');
+      setCaptchaToken(null);
+    };
 
     return () => {
       // Cleanup
       const scripts = document.querySelectorAll('script[src*="recaptcha"]');
       scripts.forEach(script => script.remove());
-      
-      // Remove reCAPTCHA badge
-      const badge = document.querySelector('.grecaptcha-badge');
-      if (badge && badge.parentNode) {
-        badge.parentNode.remove();
-      }
+      delete window.onRecaptchaSuccess;
+      delete window.onRecaptchaExpired;
     };
   }, []);
 
@@ -80,7 +59,7 @@ const PARQForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    console.log('Form submit triggered');
+    console.log('Form submitted');
     console.log('Captcha token:', captchaToken);
     
     // Validate CAPTCHA
@@ -99,7 +78,7 @@ const PARQForm = () => {
     }
     
     try {
-      console.log('Sending form data...');
+      console.log('Sending to server...');
       const response = await axios.post('/api/parq-submission', {
         ...formData,
         captchaToken
@@ -110,7 +89,7 @@ const PARQForm = () => {
       setError('');
     } catch (err) {
       console.error('Submission error:', err);
-      setError('There was an error submitting your form. Please try again.');
+      setError(err.response?.data?.message || 'There was an error submitting your form. Please try again.');
       
       // Reset CAPTCHA on error
       if (window.grecaptcha) {
@@ -184,6 +163,7 @@ const PARQForm = () => {
             />
           </div>
         </div>
+
         <div className="mb-8">
           <h2 className="text-lg font-semibold text-white mb-4">Please read the questions carefully and answer each one honestly:</h2>
           
@@ -418,7 +398,13 @@ const PARQForm = () => {
         </div>
 
         <div className="mb-6 flex justify-center">
-          <div id="recaptcha-container"></div>
+          <div 
+            className="g-recaptcha" 
+            data-sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+            data-theme="dark"
+            data-callback="onRecaptchaSuccess"
+            data-expired-callback="onRecaptchaExpired"
+          ></div>
         </div>
 
         {error && (
@@ -426,7 +412,7 @@ const PARQForm = () => {
             {error}
           </div>
         )}
-
+        
         <button 
           type="submit" 
           className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
@@ -438,4 +424,4 @@ const PARQForm = () => {
   );
 };
 
-export default PARQForm
+export default PARQForm;
