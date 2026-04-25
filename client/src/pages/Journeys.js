@@ -171,7 +171,7 @@ function Journeys() {
                 });
             }
 
-            const response = await fetch('http://localhost:5001/api/journeys', {
+            const response = await fetch('/api/journeys', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
