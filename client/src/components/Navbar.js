@@ -71,7 +71,7 @@ const Navbar = () => {
                   PAR-Q
                 </Link>
                 <Link to="/contact" className="dropdownLink">
-                  MTB Bike Excursions
+                  MTB BIKE EXCURSIONS
                 </Link>
               </div>
             )}
@@ -151,7 +151,7 @@ const Navbar = () => {
               PAR-Q
             </Link>
             <Link to="/contact" className="dropdownLink">
-              MTB Bike Excursions
+              MTB BIKE EXCURISONS
             </Link>
           </>
         )}
