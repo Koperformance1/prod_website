@@ -70,6 +70,9 @@ const Navbar = () => {
                 <Link to="/about/parq" className="dropdownLink">
                   PAR-Q
                 </Link>
+                <Link to="/contact" className="dropdownLink">
+                  MTB Bike Excursions
+                </Link>
               </div>
             )}
           </div>
