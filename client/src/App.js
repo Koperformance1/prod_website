@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Journeys from './pages/Journeys';
+import MonthlyOffer from './pages/MonthlyOffer';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Footer from './components/Footer';
@@ -27,6 +28,7 @@ function App() {
                             <Route path="/journeys" element={<Journeys />} />
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/login" element={<Login />} />
+                            <Route path="/offer" element={<MonthlyOffer />} />
                         </Routes>
                     </main>
                     <Footer />

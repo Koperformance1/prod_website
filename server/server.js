@@ -13,6 +13,7 @@ console.log('MongoDB URI exists:', !!process.env.MONGODB_URI);
 const app = express();
 const journeyRoutes = require('./routes/journeys');
 const contactRoutes = require('./routes/contact');
+const offerRoutes = require('./routes/offers');
 
 // CORS configuration
 app.use(cors({
@@ -27,7 +28,7 @@ app.use('/api/journeys', journeyRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', parqRoutes);
-
+app.use('/api/offers', offerRoutes);
 
 console.log('Attempting MongoDB connection...');
 mongoose.connect(process.env.MONGODB_URI)
