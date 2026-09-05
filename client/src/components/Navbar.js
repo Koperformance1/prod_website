@@ -1,10 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const location = useLocation();
+  const { isAuthenticated } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showMobileAboutDropdown, setShowMobileAboutDropdown] = useState(false);
@@ -89,6 +91,14 @@ const Navbar = () => {
           >
             Contact
           </Link>
+          {isAuthenticated && (
+            <Link
+              to="/offer"
+              className={`link ${location.pathname === '/offer' ? 'activeLink' : ''}`}
+            >
+              Offer
+            </Link>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -169,6 +179,15 @@ const Navbar = () => {
         >
           CONTACT
         </Link>
+        {isAuthenticated && (
+          <Link
+            to="/offer"
+            className={`link ${location.pathname === '/offer' ? 'activeLink' : ''}`}
+            onClick={toggleMobileMenu}
+          >
+            OFFER
+          </Link>
+        )}
       </div>
     </nav>
   );

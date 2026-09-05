@@ -56,7 +56,7 @@ async function verifyRecaptcha(token) {
 router.post('/', async (req, res) => {
   try {
     console.log('Contact form submission received');
-    const { name, email, subject, message, captchaToken } = req.body;
+    const { name, email, phone, subject, message, captchaToken } = req.body;
 
     // Verify reCAPTCHA
     console.log('Verifying reCAPTCHA...');
@@ -80,6 +80,7 @@ router.post('/', async (req, res) => {
       text: `
 Name: ${name}
 Email: ${email}
+Phone: ${phone ? phone : 'Not provided'}
 Subject: ${subject}
 
 Message:

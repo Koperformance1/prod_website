@@ -36,11 +36,11 @@ const OfferForm = ({ offer, onSubmit, onCancel }) => {
 
     return (
         <div className="max-w-2xl mx-auto p-6">
-            <h2 className="text-2xl font-bold mb-6">Edit Monthly Offer</h2>
+            <h2 className="text-2xl text-white font-bold mb-6">Edit Monthly Offer</h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <label className="block text-sm font-medium mb-2">Title</label>
+                    <label className="block text-white text-sm font-medium mb-2">Title</label>
                     <input
                         type="text"
                         value={title}
@@ -51,7 +51,7 @@ const OfferForm = ({ offer, onSubmit, onCancel }) => {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium mb-2">Body</label>
+                    <label className="block text-white text-sm font-medium mb-2">Body</label>
                     <textarea
                         value={body}
                         onChange={(e) => setBody(e.target.value)}
@@ -62,7 +62,7 @@ const OfferForm = ({ offer, onSubmit, onCancel }) => {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium mb-2">Image</label>
+                    <label className="block text-white text-sm font-medium mb-2">Image</label>
                     <input
                         type="file"
                         accept="image/*"
@@ -92,7 +92,7 @@ const OfferForm = ({ offer, onSubmit, onCancel }) => {
                     <button
                         type="button"
                         onClick={onCancel}
-                        className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+                        className="px-4 py-2 bg-red-300 border border-gray-300 rounded hover:bg-wb-100"
                     >
                         Cancel
                     </button>

@@ -4,6 +4,7 @@ function ContactFormFields() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phone: '',
         subject: '',
         message: ''
     });
@@ -64,7 +65,7 @@ function ContactFormFields() {
             }
 
             setStatus('success');
-            setFormData({ name: '', email: '', subject: '', message: '' });
+            setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
             setCaptchaToken(null);
             if (window.grecaptcha) {
                 window.grecaptcha.reset();
@@ -102,6 +103,15 @@ function ContactFormFields() {
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         required
+                        style={styles.input}
+                    />
+                </div>
+                <div style={styles.formGroup}>
+                    <input
+                        type="tel"
+                        placeholder="Your Phone Number (optional)"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         style={styles.input}
                     />
                 </div>
