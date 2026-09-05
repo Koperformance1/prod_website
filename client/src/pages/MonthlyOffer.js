@@ -18,7 +18,7 @@ function MonthlyOffer() {
 
     const fetchOffer = async () => {
         try {
-            const response = await fetch('http://localhost:5001/api/offers');
+            const response = await fetch('api/offers');
             const data = await response.json();
             setOffer(data);
             setLoading(false);
@@ -41,7 +41,7 @@ function MonthlyOffer() {
                 formData.append('existingImage', offerData.existingImage || '');
             }
 
-            const response = await fetch('http://localhost:5001/api/offers', {
+            const response = await fetch('api/offers', {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`
